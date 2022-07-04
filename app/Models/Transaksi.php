@@ -11,7 +11,7 @@ class Transaksi extends Model
     protected $fillable = [
         'id_reff',
         'id_user',
-        'id_typeSaldo',
+        'id_saldotype',
         'namaTransaksi',
         'tanggalTransaksi',
         'nominal',
@@ -30,6 +30,6 @@ class Transaksi extends Model
 
     public function typeSaldo()
     {
-        return $this->belongsTo(TypeSaldo::class, 'id_typeSaldo', 'id');
+        return $this->belongsTo(TypeSaldo::class, 'id_saldotype', 'id');
     }
 }

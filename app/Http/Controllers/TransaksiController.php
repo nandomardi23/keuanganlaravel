@@ -19,7 +19,7 @@ class TransaksiController extends Controller
     public function index()
     {
         // $transaksi = transaks'i::
-        $transaksi = Transaksi::with('akun', 'user')->latest()->get();
+        $transaksi = Transaksi::with('akun', 'user', 'typeSaldo')->latest()->get();
         return view('Transaksi.index', compact('transaksi'));
     }
 
@@ -31,8 +31,8 @@ class TransaksiController extends Controller
     public function create()
     {
         $Akun = Akun::latest()->get();
-        $typesaldo = TypeSaldo::latest()->get();
-        return view('Transaksi.create', compact('Akun', 'typesaldo'));
+        $TypeSaldo = TypeSaldo::latest()->get();
+        return view('Transaksi.create', compact('Akun', 'TypeSaldo'));
     }
 
     /**
@@ -48,7 +48,7 @@ class TransaksiController extends Controller
             'namaTransaksi' => 'required',
             'id_reff' => 'required',
             'tanggalTransaksi' => 'required',
-            'id_typeSaldo' => 'required',
+            'id_saldotype' => 'required',
             'nominal' => 'required',
             'desc' => 'required'
         ]);
@@ -58,7 +58,7 @@ class TransaksiController extends Controller
             'id_reff' => $request->id_reff,
             'id_user' => Auth::user()->id,
             'tanggalTransaksi' => $request->tanggalTransaksi,
-            'id_typeSaldo' => $request->id_typeSaldo,
+            'id_saldotype' => $request->id_saldotype,
             'nominal' => $request->nominal,
             'desc' => $request->desc,
         ]);

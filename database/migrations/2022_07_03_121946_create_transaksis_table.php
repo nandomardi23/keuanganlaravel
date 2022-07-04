@@ -15,9 +15,9 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('reff_id')->constrained('akuns')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('type_saldo_id')->constrained('type_saldos')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('id_user')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('id_reff')->constrained('akuns')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('id_saldotype')->constrained('type_saldos')->onUpdate('cascade')->onDelete('cascade');
             $table->string('namaTransaksi');
             $table->date('tanggalTransaksi');
             $table->double('nominal');

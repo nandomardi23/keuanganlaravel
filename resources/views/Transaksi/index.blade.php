@@ -32,10 +32,10 @@
                         <td>{{$transaksi->akun->noreff}}</td>
                         <td>{{$transaksi->akun->nama_reff}}</td>
                         <td>{{$transaksi->namaTransaksi}}</td>
-                        <td>{{$transaksi->tgl_transaksi}}</td>
+                        <td>{{$transaksi->tanggalTransaksi}}</td>
                         <td>{{$transaksi->typeSaldo->namaTypeSaldo}}</td>
                         <td>{{$transaksi->nominal}}</td>
-                        <td>{{$transaksi->Keterangan}}</td>
+                        <td>{{$transaksi->desc}}</td>
                         <td>
                             <form action="{{route('transaksi.destroy',$transaksi->id)}}" method="POST">
                                 <a href="{{route('transaksi.edit',$transaksi->id)}}"
