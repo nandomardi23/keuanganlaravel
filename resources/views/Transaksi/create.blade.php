@@ -16,14 +16,19 @@
                 @method('POST')
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="hidden" name="user_id" value="">
+                        {{-- <input type="hidden" name="user_id" value=""> --}}
+                        <div class="form-group mt-4">
+                            <label for="namaTransaksi">Nama Transaksi</label>
+                            <input type="text" name="namaTransaksi" class="form-control" value=""
+                                placeholder="Silahkan Masukan Nama Transaksi">
+                        </div>
                         <div class="form-group mt-4">
                             <label for="id_reff">Pilihlah Tipe Akuntansi</label>
                             <select class="form-select form-select-sm" name="id_reff">
                                 <option value="">--- Pilih Data ---</option>
                                 @foreach ($Akun as $Akun)
-                                <option class=" form-select form-select" value="{{$Akun->id}}" {{
-                                    old('id_reff')==$Akun->id ?
+                                <option class=" form-select" value="{{$Akun->id}}" {{ old('id_reff')==$Akun->id
+                                    ?
                                     'selected' : null }}
                                     >
                                     {{$Akun->nama_reff}}
@@ -31,28 +36,33 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group mt-4">
-                            <label for="jenis_saldo">Jenis Saldo</label>
-                            <select name="jenis_saldo" class="form-select form-select-sm" value="">
-                                <option value="Debit">Debit</option>
-                                <option value="Kredit">Kredit</option>
-                            </select>
-                        </div>
-                        <div class="form-group mt-4">
-                            <label for="" class="">Masukkan nominal </label>
-                            <input type="number" class="form-control form-control" name="saldo" value=""
+                            <label for="nominal" class="">Masukkan nominal </label>
+                            <input type="number" class="form-control form-control" name="nominal" value=""
                                 placeholder="silahkan masukan nomimal yang akan digunakan/ditambah">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mt-4">
-                            <label for="tgl_transaksi">Tanggal Transaksi</label>
-                            <input type="date" name="tgl_transaksi" class="form-control" value="">
+                            <label for="tanggalTransaksi">Tanggal Transaksi</label>
+                            <input type="date" name="tanggalTransaksi" class="form-control" value="">
+                        </div>
+                        <div class="form-group mt-4">
+                            <label for="id_typesaldo">Jenis Saldo</label>
+                            <select name="id_typesaldo" class="form-select form-select-sm" value="">
+                                <option value="">--- Pilih Data ---</option>
+                                @foreach ($typesaldo as $typesaldo)
+                                <option class=" form-select " value="{{$typesaldo->id}}" {{
+                                    old('id_typesaldo')==$typesaldo-> id ? 'selected' : null }}>{{$typesaldo ->
+                                    namaTypeSaldo}}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group mt-2">
-                            <label for="Keterangan">Keterangan</label>
-                            <textarea type="text" name="Keterangan" class="form-control" id="Keterangan"
-                                rows="5"></textarea>
+                            <label for="desv">Keterangan</label>
+                            <textarea type="text" name="desc" class="form-control" id="desc" rows="5"></textarea>
                         </div>
                     </div>
                 </div>

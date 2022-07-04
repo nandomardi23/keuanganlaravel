@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Akun;
 use App\Models\User;
 use App\Models\Transaksi;
+use App\Models\TypeSaldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,7 @@ class TransaksiController extends Controller
     public function index()
     {
         // $transaksi = transaks'i::
-        $transaksi = transaksi::with('akun', 'user')->latest()->get();
+        $transaksi = Transaksi::with('akun', 'user')->latest()->get();
         return view('Transaksi.index', compact('transaksi'));
     }
 
@@ -30,7 +31,8 @@ class TransaksiController extends Controller
     public function create()
     {
         $Akun = Akun::latest()->get();
-        return view('Transaksi.create', compact('Akun'));
+        $typesaldo = TypeSaldo::latest()->get();
+        return view('Transaksi.create', compact('Akun', 'typesaldo'));
     }
 
     /**
@@ -41,21 +43,27 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
+            'namaTransaksi' => 'required',
             'id_reff' => 'required',
-            'tgl_transaksi' => 'required',
-            'jenis_saldo' => 'required',
-            'saldo' => 'required',
-            'Keterangan' => 'required'
+            'tanggalTransaksi' => 'required',
+            'id_typeSaldo' => 'required',
+            'nominal' => 'required',
+            'desc' => 'required'
         ]);
-        $transaksi = transaksi::create([
+
+        $transaksi = Transaksi::create([
+            'namaTransaksi' => $request->namaTransaksi,
             'id_reff' => $request->id_reff,
             'id_user' => Auth::user()->id,
-            'tgl_transaksi' => $request->tgl_transaksi,
-            'jenis_saldo' => $request->jenis_saldo,
-            'saldo' => $request->saldo,
-            'Keterangan' => $request->Keterangan,
+            'tanggalTransaksi' => $request->tanggalTransaksi,
+            'id_typeSaldo' => $request->id_typeSaldo,
+            'nominal' => $request->nominal,
+            'desc' => $request->desc,
         ]);
+
+        // dd($transaksi);
         if ($transaksi) {
             return redirect()->route('transaksi.index')->with(['success' => 'data transaksi berhasil di tambahkan']);
         } else {
@@ -74,7 +82,7 @@ class TransaksiController extends Controller
         // $akun = Akun::all();
         // dd($akun);
 
-        $transaksi = transaksi::with('akun', 'user')->findOrFail($id);
+        $transaksi = Transaksi::with('akun', 'user')->findOrFail($id);
         return view('Transaksi.show', compact('transaksi'));
     }
 
@@ -88,7 +96,7 @@ class TransaksiController extends Controller
     {
         // $akun = Akun::latest()->get();
         $Akun = Akun::latest()->get();
-        $transaksi = transaksi::with('akun', 'user')->findOrFail($id);
+        $transaksi = Transaksi::with('akun', 'user')->findOrFail($id);
         // dd($transaksi);
         return view('Transaksi.edit', compact('transaksi', 'Akun'));
     }
@@ -110,7 +118,7 @@ class TransaksiController extends Controller
             'saldo' => 'required',
             'keterangan' => 'required'
         ]);
-        $transaksi = transaksi::findOrFail($id);
+        $transaksi = Transaksi::findOrFail($id);
         $transaksi->update([
             'id_reff' => $request->id_reff,
             'tgl_transaksi' => $request->tgl_transaksi,

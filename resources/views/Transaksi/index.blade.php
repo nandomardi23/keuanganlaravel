@@ -15,11 +15,12 @@
                 <thead class="bg-secondary">
                     <tr>
                         <td class="text-light">No</td>
+                        <td class="text-light">Nama Transaksi</td>
                         <td class="text-light">No Reff</td>
-                        <td class="text-light">Nama Akuntansi</td>
+                        <td class="text-light">Tipe Akun</td>
                         <td class="text-light">Tanggal Transaksi</td>
-                        <td class="text-light">Jenis Saldo</td>
-                        <td class="text-light">Saldo</td>
+                        <td class="text-light">Jenis Transaksi</td>
+                        <td class="text-light">Nominal</td>
                         <td class="text-light">keterangan</td>
                         <td class="text-light">Action</td>
                     </tr>
@@ -30,9 +31,10 @@
                         <td>{{$loop->iteration}}</td>
                         <td>{{$transaksi->akun->noreff}}</td>
                         <td>{{$transaksi->akun->nama_reff}}</td>
+                        <td>{{$transaksi->namaTransaksi}}</td>
                         <td>{{$transaksi->tgl_transaksi}}</td>
-                        <td>{{$transaksi->jenis_saldo}}</td>
-                        <td>{{$transaksi->saldo}}</td>
+                        <td>{{$transaksi->typeSaldo->namaTypeSaldo}}</td>
+                        <td>{{$transaksi->nominal}}</td>
                         <td>{{$transaksi->Keterangan}}</td>
                         <td>
                             <form action="{{route('transaksi.destroy',$transaksi->id)}}" method="POST">

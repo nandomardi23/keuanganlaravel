@@ -14,8 +14,6 @@ class TypeSaldoSeeder extends Seeder
      */
     public function run()
     {
-        TypeSaldo::truncate();
-
         $typesaldo = [[
             'namaTypeSaldo' => 'Debit',
             'desc' => 'ini adalah bagian Debit yang menandakan bahwa penambahan data positif atau plus pada transaksi',
