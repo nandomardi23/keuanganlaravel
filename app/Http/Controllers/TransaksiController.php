@@ -96,9 +96,10 @@ class TransaksiController extends Controller
     {
         // $akun = Akun::latest()->get();
         $Akun = Akun::latest()->get();
+        $TypeSaldo = TypeSaldo::latest()->get();
         $transaksi = Transaksi::with('akun', 'user')->findOrFail($id);
         // dd($transaksi);
-        return view('Transaksi.edit', compact('transaksi', 'Akun'));
+        return view('Transaksi.edit', compact('transaksi', 'Akun', 'TypeSaldo'));
     }
 
     /**
@@ -112,19 +113,22 @@ class TransaksiController extends Controller
     {
         // dd($request->all());
         $this->validate($request, [
+            'namaTransaksi' => 'required',
             'id_reff' => 'required',
-            'tgl_transaksi' => 'required',
-            'jenis_saldo' => 'required',
-            'saldo' => 'required',
-            'keterangan' => 'required'
+            'tanggalTransaksi' => 'required',
+            'id_saldotype' => 'required',
+            'nominal' => 'required',
+            'desc' => 'required'
         ]);
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->update([
+            'namaTransaksi' => $request->namaTransaksi,
+            'id_user' => Auth::user()->id,
             'id_reff' => $request->id_reff,
-            'tgl_transaksi' => $request->tgl_transaksi,
-            'jenis_saldo' => $request->jenis_saldo,
-            'saldo' => $request->saldo,
-            'keterangan' => $request->keterangan,
+            'tanggalTransaksi' => $request->tanggalTransaksi,
+            'id_saldotype' => $request->id_saldotype,
+            'nominal' => $request->nominal,
+            'desc' => $request->desc,
         ]);
         if ($transaksi) {
             return redirect()->route('transaksi.index')->with(['success' => 'data transaksi berhasil di update']);
@@ -141,6 +145,8 @@ class TransaksiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->delete();
+        return redirect()->route('transaksi.index')->with(['success' => 'Sukses Menghapus Data']);
     }
 }
